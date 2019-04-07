@@ -13,9 +13,18 @@ let snake = [
   {x:4*box, y:5*box}
 ];
 
-let fruit = {
-  x: Math.floor(Math.random() *numberOfBoxes)*box,
-  y: Math.floor(Math.random() *numberOfBoxes+2)*box
+let fruit = randomPoint()
+
+function randomPoint() {
+    let randX = Math.floor(Math.random() *numberOfBoxes)*box;
+    let randY = Math.floor(Math.random() *numberOfBoxes)*box;
+    for (let i = 0; i<snake.length; i++) {
+      if (randX == snake[i].x && randY == snake[i].y) {
+        return randomPoint();
+      } else {
+        return { x: randX, y: randY }
+      }
+  }
 }
 
 let dir = "";
@@ -122,6 +131,7 @@ function isCollision() {
 function isGameover() {
   if (isOut() || isCollision()) {
     clearInterval(game);
+    alert("Game over, your score is: " + score);
   }
 }
 
